@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+<div class="jumbotron my">
+    <p class="font-weight-light text-right">작성자 : {{diary.writer}} &nbsp;&nbsp; 수정일 : {{diary.date}}<br></p>
+
+    <img src="{{ diary.image.url }}" class="rounded mx-auto d-block" width="400px" height="400px"><br>
+    <h2 class="display-4 ">{{diary.title}}</h2>
+    <p class="lead">{{diary.body}}
+
+    {% if user.username == diary.writer %}
+    <div class="float-right">
+        <a class="btn btn-primary" href="{% url 'edit' diary.id %}" role="button">수정</a>
+        <a class="btn btn-secondary" href="{% url 'delete' diary.id %}" role="button">삭제</a>
+    </div>
+    
+    </p>
+    
+    {% endif %}
+<br>
+    <hr class="my-4">
+        
+    <span class="comment">Comments</span>
+    <br>
+    {% for comment in diary.comments.all %}
+        <img src="{% static 'likelion.png' %}" id="img1" width="26px" height="26px">
+        {{comment.com_writer}} &nbsp; {{ comment.contents }}
+             
+         {% if user.username == comment.com_writer %}
+        <a href="{% url 'comment_edit' diary.id comment.id %}"  class="badge badge-primary">수정</a> |
+        <a href="{% url 'comment_delete' diary.id comment.id %}"  class="badge badge-secondary">삭제</a>
+        {% endif %}
+        <br>
+    {% endfor %} <br>
+    <form action="{% url 'comment_create' diary.id %}" method=POST>
+            {% csrf_token %}
+            <textarea name="contents"></textarea>
+            <button type="submit" >댓글쓰기</button>
+        </form>
+</div>
+    
+{% endblock %}

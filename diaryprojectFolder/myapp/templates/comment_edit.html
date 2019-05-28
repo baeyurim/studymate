@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    댓글쓰기: 
+    <textarea name="contents"></textarea>
+    <button type="submit" >OK</button>
+</form>
+
+
+
+{% endblock %}
+
