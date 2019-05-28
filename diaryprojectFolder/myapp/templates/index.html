@@ -38,57 +38,64 @@
 {% endfor %}
 
 
-    <br><br><br><h1>Social Login</h1> <a>
-       
-    <a href="/accounts/signup">회원가입</a><br>
-    
-    {% if user.is_authenticated %}
-    <a href="/accounts/logout">로그아웃</a><br>
-    {{user.username}} 님이 로그인 중
-    
-    {% else %}
-    <h3>로그인 하세요 !<h3>
-    <a href="{% provider_login_url 'google' %}"> <img src="{% static 'google.jpg'%}" width="100" height="100" alt="google" > </a> <br>
-    {% endif %}
+<div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">Social Login</h5>
+          <a href="/accounts/signup">회원가입</a><br>
+            {% if user.is_authenticated %}
+                <a href="/accounts/logout">로그아웃</a><br>
+                {{user.username}} 님이 로그인 중
+            {% else %}
+                <h3>로그인 하세요 !<h3>
+                <a href="{% provider_login_url 'google' %}"> <img src="{% static 'logindog.jpg'%}" width="100" height="100" alt="google" > </a> <br>
+            {% endif %}
+
+        </div>
+    </div>
+
+<br>
+
+</div>
+
+<div id="map" style="width:100%;height:350px;"></div>
+  <p>
+  <button type="button" class="btn btn-secondary btn-sm"  onclick="setZoomable(false)">지도 확대/축소 끄기</button>
+  <button type="button" class="btn btn-secondary btn-sm" onclick="setZoomable(true)">지도 확대/축소 켜기</button>
+  </p>
+  
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9987498c6b93b2c9711afdfe0c602c8e"></script>
+  <script>
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = { 
+          center: new daum.maps.LatLng(37.6063202,127.0396193,17), // 지도의 중심좌표
+           // draggable: false, // 지도를 생성할때 지도 이동 및 확대/축소를 막으려면 draggable: false 옵션을 추가하세요
+          level: 3 // 지도의 확대 레벨
+      };
+  
+  var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+          
+var markerPosition = new daum.maps.LatLng(37.6063202,127.0396193,17);
+var marker = new daum.maps.Marker({
+    position: markerPosition
+});
 
 
-    <div id="map" style="width:100%;height:350px;"></div>
-    <p>
-    <button type="button" class="btn btn-secondary btn-sm"  onclick="setZoomable(false)">지도 확대/축소 끄기</button>
-    <button type="button" class="btn btn-secondary btn-sm" onclick="setZoomable(true)">지도 확대/축소 켜기</button>
-    </p>
-    
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9987498c6b93b2c9711afdfe0c602c8e"></script>
-    <script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = { 
-            center: new daum.maps.LatLng(37.6063202,127.0396193,17), // 지도의 중심좌표
-             // draggable: false, // 지도를 생성할때 지도 이동 및 확대/축소를 막으려면 draggable: false 옵션을 추가하세요
-            level: 3 // 지도의 확대 레벨
-        };
-    
-    var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-            
-  var markerPosition = new daum.maps.LatLng(37.6063202,127.0396193,17);
-  var marker = new daum.maps.Marker({
-      position: markerPosition
-  });
-  
-  
-  marker.setMap(map);
-  //마커 제거
-  //marker.setMap(null);
-  
-  
-  
-  
-  
-    // 버튼 클릭에 따라 지도 확대, 축소 기능을 막거나 풀고 싶은 경우에는 map.setZoomable 함수를 사용합니다
-    function setZoomable(zoomable) {
-        // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
-        map.setZoomable(zoomable);    
-    }
-    </script>
+marker.setMap(map);
+//마커 제거
+//marker.setMap(null);
+
+
+
+
+
+  // 버튼 클릭에 따라 지도 확대, 축소 기능을 막거나 풀고 싶은 경우에는 map.setZoomable 함수를 사용합니다
+  function setZoomable(zoomable) {
+      // 마우스 휠로 지도 확대,축소 가능여부를 설정합니다
+      map.setZoomable(zoomable);    
+  }
+  </script>
+
 
     
 {% endblock %}
